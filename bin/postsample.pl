@@ -31,6 +31,5 @@ $yammer->access_token_secret( $access_tokens->{access_token_secret} );
 my $response = $yammer->update_restricted_resource(
     'https://www.yammer.com/api/v1/messages.json',
     'body'     => '日本語テスト',
-    'group_id' => 167085 
 );
 print $response->content, "\n";
