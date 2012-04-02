@@ -49,17 +49,8 @@ sub my_make_request {
     my $req = HTTP::Request->new( $method => $req_url, @args );
 
     if ( 'POST' eq $method ) {
-        my ( @pairs, $cont );
-        while ( my ( $k, $v ) = each %$params ) {
-            push @pairs,
-              join( '=',
-                Net::OAuth::Message::encode($k),
-                Net::OAuth::Message::encode($v) );
-            $cont = join( '&', @pairs );
-            $req->content($cont);
-            $req->header(
-                'Content-Type' => 'application/x-www-form-urlencoded' );
-        }
+        $req->content( $request->to_post_body );
+        $req->header( 'Content-Type' => 'application/x-www-form-urlencoded' );
     }
     my $response = $self->{browser}->request($req);
     return $self->_error(
